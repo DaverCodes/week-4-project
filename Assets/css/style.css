@@ -7,11 +7,20 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
+}
 
+header{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 header div{
   display: inline-flex;
   flex-direction: row;
-  justify-content: space-between;
+};
+
+.timer {
+  display: flex;
+  justify-content: flex-end;
 };
