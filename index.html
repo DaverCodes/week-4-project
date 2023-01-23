@@ -6,68 +6,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="./Assets/css/style.css" />
   </head>
+
   <body>
-    <header>
-      <div class="highscores">veiw highscores</div>
-      <div class= "card timer">
-        <div class = "timer-text">
-        <div class="large-font timer-count">10</div>
-        <h3>seconds remaining</h3>
+    <section class="high-timer">
+      <div id="table-and-scores">
+        <table id="high-scores" class="hidden">
+          <tr>
+            <th>Initials</th>
+            <th>Score</th>
+          </tr>
+          <tr>
+            <td><span id="initials"></span></td>
+            <td><span id="score"></span></td>
+          </tr>
+        </table>
+        <div class="score-buttons">
+          <button class="js-buttons" id="show-scores">View Highscores</button>
+          <button class="js-buttons hidden" id="hide-scores">
+            Hide Scores
+          </button>
+        </div>
       </div>
-      <h1 class= "large-font">Coding Quiz Challenge</h1>
-      <p>try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
-      <button class="start-button">Start</button>
-    </header>
-    <main>
-      <h2 class="Q1H">Commonly used data types DO NOT include:</h2>
-      <ul class="Q1L">
-        <button class="incorrect">1. strings</button>
-        <button class="incorrect">2. booleans</button>
-        <button class="correct">3. alerts</button>
-        <button class="incorrect">4. numbers</button>
-      </ul>
+      <div id="timer">
+        <p>Time: <span id="time-left"></span></p>
+      </div>
+    </section>
 
-      <h2 class="Q2H">The condition in an if / else statement is enclosed within ___.</h2>
-      <ul class="Q2L">
-        <button class="incorrect">1. quotes</button>
-        <button class="incorrect">2. curly brackets</button>
-        <button class="correct">3. parenthesis</button>
-        <button class="incorrect">4. square brackets</button>
-      </ul>
-
-      <h2 class="Q3H">Arrays in JavaScript can be used to store ___.</h2>
-      <ul class="Q3L">
-        <button class="incorrect">1. numbers and strings</button>
-        <button class="incorrect">2. other arrays</button>
-        <button class="incorrect">3. booleans</button>
-        <button class="correct">4. all of the above</button>
-      </ul>
-
-      <h2 class="Q4H">String values must be enclosed within ___ when being assigned to variables.</h2>
-      <ul class="Q4L">
-        <button class="incorrect">1. commas</button>
-        <button class="incorrect">2. curly brackets</button>
-        <button class="correct">3. quotes</button>
-        <button class="incorrect">4. parentheses</button>
-      </ul>
-
-      <h2 class="Q5H">A very useful tool used during development and debugging for printing content to the debugger is:</h2>
-      <ul class="Q5L">
-        <button class="incorrect">1. JavaScript</button>
-        <button class="incorrect">2. terminal / bash</button>
-        <button class="incorrect">3. for loops</button>
-        <button class="correct">4. console log</button>
-      </ul>
-
-      <h3>All done!</h3>
-      <p>Your final score is</p>
-      <div>Enter initials:</div>
-      <textarea name="" id="" cols="10" rows="1"></textarea>
-      <button>Submit</button>
-
-
-
-    </main>
+    <section class="quiz-block">
+      <div class="quiz-header">
+        <h1>Coding Quiz Challenge</h1>
+      </div>
+      <div class="container">
+        <div class="question-container">
+          <div id="question">
+            <p>
+              try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!
+            </p>
+          </div>
+          <div id="question-buttons">
+            <button class="js-buttons hidden"></button>
+            <button class="js-buttons hidden"></button>
+            <button class="js-buttons hidden"></button>
+            <button class="js-buttons hidden"></button>
+          </div>
+        </div>
+      </div>
+      <div class="button-div">
+        <button id="start-button" class="main-button">Start Quiz</button>
+        <button id="next-button" class="main-button hidden">Next</button>
+      </div>
+      <form class="hidden" action="" method="get" id="html-Form">
+        <div class="form">
+          <label for="name">Enter your initials to save your score: </label>
+          <input
+            class="form-submit"
+            type="text"
+            name="name"
+            id="initials"
+            required
+          />
+        </div>
+        <div class="form">
+          <input class="form-submit" type="submit" value="Save!" />
+        </div>
+      </form>
+    </section>
     <script src="./Assets/js/script.js"></script>
   </body>
 </html>

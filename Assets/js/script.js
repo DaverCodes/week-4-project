@@ -1,142 +1,168 @@
-var wordBlank = document.querySelector("");
-var win = document.querySelector(".win");
-var lose = document.querySelector(".lose");
-var timerElement = document.querySelector(".timer-count");
-var startButton = document.querySelector(".start-button");
+let startButton = document.getElementById("start-button");
+let nextButton = document.getElementById("next-button");
+let showScore = document.getElementById("show-scores");
+let hideScore = document.getElementById("hide-scores");
+
+let titleHead = document.querySelector(".quiz-header");
+let form = document.getElementById("html-Form");
+let questionContainer = document.getElementById("question-container");
+let timeLeft = 75;
+let shuffledQues = [];
+let currentQuestionIndex = 0;
+let currentScore = 0;
+let scores = [];
+
+const buttonDiv = document.querySelector(".button-div");
+const questionElem = document.getElementById("question");
+const answerButtonsElem = document.getElementById("question-buttons");
+
+const questions = [
+  {
+    question: "Commonly used data types DO NOT include:?",
+    answers: [
+      { text: "strings", correct: false },
+      { text: "booleans", correct: false },
+      { text: "alerts", correct: true },
+      { text: "numbers", correct: false },
+    ],
+  },
+
+  {
+    question:
+      "The condition in an if / else statement is enclosed within ___.",
+    answers: [
+      { text: "quotes", correct: false },
+      { text: "curly brackets", correct: false },
+      { text: "parenthesis", correct: true },
+      { text: "square brackets", correct: false },
+    ],
+  },
+
+  {
+    question: "Arrays in JavaScript can be used to store ___.",
+    answers: [
+      { text: "numbers and strings", correct: false },
+      { text: "other arrays", correct: false },
+      { text: "booleans", correct: false },
+      { text: "all of the above", correct: true },
+    ],
+  },
+
+  {
+    question: "String values must be enclosed within ___ when being assigned to variables.",
+    answers: [
+      { text: "commas", correct: false },
+      { text: "curly brackets", correct: false },
+      { text: "quotes", correct: true },
+      { text: "parentheses", correct: false },
+    ],
+  },
+
+  {
+    question: "a very useful tool used during development and debugging got printing content to the debugger is:",
+    answers: [
+      { text: "JavaScript", correct: false },
+      { text: "terminal / bash", correct: false },
+      { text: "for loops", correct: false },
+      { text: "console log", correct: true },
+    ],
+  },
+];
+
+function nextQuestion() {
+  clearPage();
+  showQuestions(shuffledQues[currentQuestionIndex]);
+}
+
+function clearPage() {
+  nextButton.classList.add("hidden");
+  while (answerButtonsElem.firstChild) {
+    answerButtonsElem.removeChild(answerButtonsElem.firstChild);
+  }
+}
+
+function statusClass(element, correct) {
+  clearStatus(element);
+  if (correct === "true") {
+    element.classList.add("correct");
+    element.classList.remove("js-buttons");
+  } else {
+    element.classList.add("incorrect");
+    element.classList.remove("js-buttons");
+  }
+}
+
+function clearStatus(element) {
+  element.classList.remove("correct");
+  element.classList.remove("incorrect");
+}
+
+function chooseAnswer(selection) {
+  const selectButton = selection.target;
+  const correct = selectButton.dataset.correct;
+  statusClass(selectButton, correct);
+  Array.from(answerButtonsElem.children).forEach((button) => {
+    statusClass(button, button.dataset.correct);
+  });
 
 
-var winCounter = 0;
-var loseCounter = 0;
-var isWin = false;
-var timer;
-var timerCount;
+  if (shuffledQues.length > currentQuestionIndex + 1) {
+    nextButton.classList.remove("hidden");
+  } else {
+    nextButton.classList.add("hidden");
+  }
+}
 
+function showQuestions(question) {
+  questionElem.textContent = question.question;
+  question.answers.forEach((answer) => {
+    const button = document.createElement("button");
+    button.textContent = answer.text;
+    button.classList.add("js-buttons");
+    button.dataset.correct = answer.correct;
+    button.addEventListener("click", chooseAnswer);
+    answerButtonsElem.appendChild(button);
+  });
+}
+
+function countdown() {
+  startButton.classList.add("hidden");
+  titleHead.classList.add("hidden");
+  shuffledQues = questions.sort(() => Math.random - 0.5);
+  nextQuestion();
+  nextButton.classList.add("hidden");
+  currentQuestionIndex = 0;
+  form.classList.remove("hidden");
+}
+
+
+function renderScoresTable(scores) {
+  for (let i = 0; i < length; i++) {}
+}
 
 function init() {
-    getWins();
-    getlosses();
-}
-  
-function startGame() {
-    isWin = false;
-    timerCount = 10;
+  renderScoresTable(scores);
 }
 
-function winGame() {
-    // wordBlank.textContent = "YOU WON!!!🏆 ";
-    winCounter++
-    startButton.disabled = false;
-    setWins()
-}
-
-function loseGame() {
-    // wordBlank.textContent = "GAME OVER";
-    loseCounter++
-    startButton.disabled = false;
-    setLosses()
-}
-
-
-// add time deductions on lose
-function startTimer() {
-    // Sets timer
-    timer = setInterval(function() {
-      timerCount--;
-      timerElement.textContent = timerCount;
-      if (timerCount >= 0) {
-        // Tests if win condition is met
-        if (isWin && timerCount > 0) {
-          // Clears interval and stops timer
-          clearInterval(timer);
-          winGame();
-        }
-      }
-      // Tests if time has run out
-      if (timerCount === 0) {
-        // Clears interval
-        clearInterval(timer);
-        loseGame();
-      }
-    }, 1000);
-}
-
-
-// Updates win count on screen and sets win count to client storage
-function setWins() {
-    win.textContent = winCounter;
-    localStorage.setItem("winCount", winCounter);
-}
-
-// Updates lose count on screen and sets lose count to client storage
-function setLosses() {
-    lose.textContent = loseCounter;
-    localStorage.setItem("loseCount", loseCounter);
-}
-
-// These functions are used by init
-function getWins() {
-    // Get stored value from client storage, if it exists
-    var storedWins = localStorage.getItem("winCount");
-    // If stored value doesn't exist, set counter to 0
-    if (storedWins === null) {
-      winCounter = 0;
-    } else {
-      // If a value is retrieved from client storage set the winCounter to that value
-      winCounter = storedWins;
-    }
-    //Render win count to page
-    win.textContent = winCounter;
-}
-  
-
-function getlosses() {
-    var storedLosses = localStorage.getItem("loseCount");
-    if (storedLosses === null) {
-      loseCounter = 0;
-    } else {
-      loseCounter = storedLosses;
-    }
-    lose.textContent = loseCounter;
-}
-
-function checkWin() {
-    // If the word equals the blankLetters array when converted to string, set isWin to true
-    if (chosenWord === blanksLetters.join("")) {
-      // This value is used in the timer function to test if win condition is met
-      isWin = true;
-    }
-}
-
-// Attach event listener to start button to call startGame function on click
-startButton.addEventListener("click", startGame);
-
-// Calls init() so that it fires when page opened
 init();
 
-// Bonus: Add reset button
-var resetButton = document.querySelector(".reset-button");
+startButton.addEventListener("click", countdown);
 
-function resetGame() {
-  // Resets win and loss counts
-  winCounter = 0;
-  loseCounter = 0;
-  // Renders win and loss counts and sets them into client storage
-  setWins()
-  setLosses()
-}
-// Attaches event listener to button
-resetButton.addEventListener("click", resetGame);
+showScore.addEventListener("click", () => {
+  showScore.classList.add("hidden");
+});
 
+hideScore.addEventListener("click", () => {
+  showScore.classList.remove("hidden");
+});
 
-
+nextButton.addEventListener("click", () => {
+  currentQuestionIndex++;
+  nextQuestion();
+});
 
   
-  
-
-
-  
-  
-  
+    
 
 
 
