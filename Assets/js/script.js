@@ -12,11 +12,13 @@ let currentQuestionIndex = 0;
 let currentScore = 0;
 let scores = [];
 
+
+
 const buttonDiv = document.querySelector(".button-div");
 const questionElem = document.getElementById("question");
 const answerButtonsElem = document.getElementById("question-buttons");
 
-const questions = [
+var questions = [
   {
     question: "Commonly used data types DO NOT include:?",
     answers: [
