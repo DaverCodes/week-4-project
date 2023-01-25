@@ -4,9 +4,11 @@ let showScore = document.getElementById("show-scores");
 let hideScore = document.getElementById("hide-scores");
 
 let titleHead = document.querySelector(".quiz-header");
+let timerEl = document.getElementById("time-left");
+let tableScore = document.getElementById("high-scores");
 let form = document.getElementById("html-Form");
 let questionContainer = document.getElementById("question-container");
-let timeLeft = 75;
+let timeLeft = 60;
 let shuffledQues = [];
 let currentQuestionIndex = 0;
 let currentScore = 0;
@@ -71,10 +73,21 @@ var questions = [
   },
 ];
 
+//maybemaybe
+//works- needs to switch to end game screen
+
 function nextQuestion() {
-  clearPage();
-  showQuestions(shuffledQues[currentQuestionIndex]);
+  if (index >= questions.length - 1) {
+    endgame();
+    return
+  }
+  else{
+    clearPage();
+    index++
+  }  
 }
+
+//works- needs to switch to end game screen
 
 function clearPage() {
   nextButton.classList.add("hidden");
@@ -82,6 +95,14 @@ function clearPage() {
     answerButtonsElem.removeChild(answerButtonsElem.firstChild);
   }
 }
+function nextQuestion() {
+  clearPage();
+  showQuestions(shuffledQues[currentQuestionIndex]);
+}
+
+
+
+
 
 function statusClass(element, correct) {
   clearStatus(element);
@@ -106,8 +127,8 @@ function chooseAnswer(selection) {
   Array.from(answerButtonsElem.children).forEach((button) => {
     statusClass(button, button.dataset.correct);
   });
-
-
+  
+  
   if (shuffledQues.length > currentQuestionIndex + 1) {
     nextButton.classList.remove("hidden");
   } else {
@@ -162,11 +183,4 @@ nextButton.addEventListener("click", () => {
   currentQuestionIndex++;
   nextQuestion();
 });
-
-  
-    
-
-
-
-
   
